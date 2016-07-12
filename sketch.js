@@ -38,6 +38,12 @@ var setup = function(){
 
   bcol =color(tcol[0],1,1);
   col = color(tcol[1],1,1);
+
+  if(random()<(1/(cols.length+1))){
+    bcol =color(0,0,0);
+    col = color(0,0,1);
+  }
+
   background(bcol);
 }
 
@@ -99,7 +105,6 @@ var drawCircle = function(now){
   var ang = atan(diffv.y, diffv.x);
 
   var dist = now.dist(past);
-  console.log(dist);
   var r = map(dist,0,100,1,20);
   if(dist>r*2){
     //line(now.x,now.y,past.x, past.y)
