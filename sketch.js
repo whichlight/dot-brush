@@ -91,16 +91,12 @@ var drawCircle = function(now){
   col = color(0,0,1);
   var diffv = p5.Vector.sub(now,past);
   var ang = atan(diffv.y, diffv.x);
-  console.log(ang);
 
   var dist = now.dist(past);
-
-  if(dist>2){
+  console.log(dist);
+  var r = map(dist,0,100,1,20);
+  if(dist>r*2){
     //line(now.x,now.y,past.x, past.y)
-    fill(col);
-    stroke(col);
-    ellipse(now.x,now.y,4,4);
-
     strokeWeight(2);
 
     //perpendicular
@@ -120,19 +116,29 @@ var drawCircle = function(now){
     line(p1.x,p1.y,p2.x, p2.y)
     */
 
+    var numDots =2;
 
-    for(var i=1; i<4; i++){
-    var p1 = p5.Vector.add(now,n1.normalize().mult(10*i));
-    var p2 = p5.Vector.add(now,n2.normalize().mult(10*i));
+    stroke(0,0,0);
+
+    strokeWeight(2);
+
+    for(var i=1; i<numDots; i++){
+    var p1 = p5.Vector.add(now,n1.normalize().mult(2.5*r*i));
+    var p2 = p5.Vector.add(now,n2.normalize().mult(2.5*r*i));
 
     fill(col);
     stroke(col);
-    ellipse(p1.x,p1.y,4,4)
+    ellipse(p1.x,p1.y,r,r)
 
     fill(col);
     stroke(col);
 
-    ellipse(p2.x,p2.y,4,4)
+    ellipse(p2.x,p2.y,r,r)
+    fill(col);
+    stroke(col);
+    ellipse(now.x,now.y,r,r);
+
+
 
     }
 
@@ -143,6 +149,9 @@ var drawCircle = function(now){
   }
 }
 
+
+function Rake(){
+}
 
 var draw = function(){
   if(touchIsDown || mouseIsPressed){
