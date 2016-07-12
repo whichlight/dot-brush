@@ -10,6 +10,7 @@ var newgesture = true;
 var endgesture = true;
 var touched = false;
 var autodrawinit = true;
+var bcol;
 
 
 
@@ -31,7 +32,10 @@ var setup = function(){
   el.addEventListener("touchmove", pdefault, false);
 
   past = createVector(0, 0);
-  background(color(0,0,0));
+
+  bcol =color(0,0,0);
+  col = color(0,0,1);
+  background(bcol);
 }
 
 function windowResized() {
@@ -88,7 +92,6 @@ var pressed= function(x,y){
 
 
 var drawCircle = function(now){
-  col = color(0,0,1);
   var diffv = p5.Vector.sub(now,past);
   var ang = atan(diffv.y, diffv.x);
 
