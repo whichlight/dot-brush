@@ -33,8 +33,11 @@ var setup = function(){
 
   past = createVector(0, 0);
 
-  bcol =color(0,0,0);
-  col = color(0,0,1);
+  var cols = [[350,60],[240,10], [300,180]];
+  var tcol = cols[floor(random(cols.length))];
+
+  bcol =color(tcol[0],1,1);
+  col = color(tcol[1],1,1);
   background(bcol);
 }
 
