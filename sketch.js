@@ -69,6 +69,11 @@ var touchMoved= function(){
 var touchEnded= function(){
   pressed(touchX,touchY);
   endgesture = true;
+  var dist = now.dist(past);
+  if(dist==0){
+   background(bcol);
+  }
+
   return false;
 }
 
@@ -101,12 +106,20 @@ var pressed= function(x,y){
 
 
 var drawCircle = function(now){
-  var diffv = p5.Vector.sub(now,past);
-  var ang = atan(diffv.y, diffv.x);
 
-  var dist = now.dist(past);
-  var r = map(dist,0,100,1,20);
-  if(dist>r*2){
+  var diffv = p5.Vector.sub(now,past).mult(0.4);
+  var now= p5.Vector.add(diffv,past);
+  var dist = diffv.mag();
+  var r = dist/1.5;
+
+  if(dist==0 && past.r!=0){
+      console.log(r + "," + past.r);
+      dist = 15;
+    //  r= past.r;
+    //  dist = 1.5*r;
+  }
+  if(dist>10){
+    now.r = r;
     //line(now.x,now.y,past.x, past.y)
     strokeWeight(2);
 
@@ -114,18 +127,16 @@ var drawCircle = function(now){
     var n1 = createVector(-1*diffv.y, diffv.x);
     var n2 = createVector(diffv.y, -1*diffv.x);
 
+
     if(n1.mag()==0){
+      console.log('zero');
       n1 = past.n1;
       n2 = past.n2;
+      console.log(n1);
     }
 
-
-
-    /*
-    noFill();
-    stroke(col);
-    line(p1.x,p1.y,p2.x, p2.y)
-    */
+    now.n1 = n1;
+    now.n2 = n2;
 
     var numDots =2;
 
@@ -134,8 +145,8 @@ var drawCircle = function(now){
     strokeWeight(2);
 
     for(var i=1; i<numDots; i++){
-    var p1 = p5.Vector.add(now,n1.normalize().mult(2.5*r*i));
-    var p2 = p5.Vector.add(now,n2.normalize().mult(2.5*r*i));
+    var p1 = p5.Vector.add(now,n1.normalize().mult(1.5*r*i));
+    var p2 = p5.Vector.add(now,n2.normalize().mult(1.5*r*i));
 
     fill(col);
     stroke(col);
@@ -143,15 +154,29 @@ var drawCircle = function(now){
 
     fill(col);
     stroke(col);
-
     ellipse(p2.x,p2.y,r,r)
-    fill(col);
+
+
+    }
+
+
+   fill(col);
     stroke(col);
     ellipse(now.x,now.y,r,r);
 
 
+    /*
 
-    }
+       fill(col);
+    stroke(color(1,1,1));
+    ellipse(now.x,now.y,5,5);
+
+    noFill();
+    stroke(col);
+    line(now.x,now.y,past.x,past.y);
+    */
+
+
 
 
 
